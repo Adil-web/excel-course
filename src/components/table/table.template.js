@@ -4,8 +4,20 @@ const CODES = {
 }
 // /summon zombie ~ ~1 ~ {ArmorItems:[{id:diamond_boots,Count:1b},{id:diamond_leggings,Count:1b},{id:diamond_chestplate,Count:1b},{id:diamond_helmet,Count:1b}]}
 
-function createCell(_, col) {
-    return `<div class="cell" contenteditable data-col="${col}"></div>`
+// function createCell(_, col) {
+//     return `<div class="cell" contenteditable data-col="${col}"></div>`
+// }
+
+function toCell(row) {
+    return function(_, col) {
+        return `<div 
+                    class="cell" 
+                    contenteditable 
+                    data-type="cell"
+                    data-col="${col}"
+                    data-id="${row}:${col}">
+                </div>`
+    }
 }
 
 function createCol(col, index) {
@@ -39,12 +51,13 @@ export function createTable(rowsCount = 15) {
     rows.push(createRow(cols, ''))
 
     
-    for(let i=0;i<rowsCount;i++) {
+    for(let row=0;row<rowsCount;row++) {
         const cells = new Array(colsCount)
             .fill('')
-            .map(createCell)
+            // .map(createCell)
+            .map(toCell(row))
             .join('')
-        rows.push(createRow(cells, i+1))
+        rows.push(createRow(cells, row+1))
     }
     
     return rows.join(' ')
