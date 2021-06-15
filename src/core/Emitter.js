@@ -1,39 +1,49 @@
 export class Emitter {
-    constructor() {
-        this.listereners = {}
-    }
+  constructor() {
+    this.listeners = {}
+  }
 
-    // Уведомление для слушателей
-    // table.emit("formula:done", {args})
-    emit(event, ...args) {
-        if(!Array.isArray(this.listereners[event])) {
-            return false
-        }
-        this.listereners[event].forEach(listener => {
-            listener(...args)
-        })
-        return true
+  // dispatch, fire, trigger
+  // Уведомляем слушателе если они есть
+  // table.emit('table:select', {a: 1})
+  emit(event, ...args) {
+    if (!Array.isArray(this.listeners[event])) {
+      return false
     }
-    
-    // Подписка на уведомления
-    // formula.subscribe('table:select', () => {})
-    subscribe(event, fn) {
-        this.listereners[event] = this.listereners[event] || []
-        this.listereners[event].push(fn)
-        return () => {
-            this.listereners[event] = this.listereners[event].filter(listener => listener !== fn)
-        }
+    this.listeners[event].forEach(listener => {
+      listener(...args)
+    })
+    return true
+  }
+
+  // on, listen
+  // Подписываемся на уведомление
+  // Добавляем нового слушателя
+  // formula.subscribe('table:select', () => {})
+  subscribe(event, fn) {
+    this.listeners[event] = this.listeners[event] || []
+    this.listeners[event].push(fn)
+    return () => {
+      this.listeners[event] =
+        this.listeners[event].filter(listener => listener !== fn)
     }
+  }
 }
 
 // Example
 // const emitter = new Emitter()
-// const unSub = emitter.subscribe('test', data => console.log(data))
-// emitter.emit('test', 42)
+//
+// const unsub = emitter.subscribe('vladilen', data => console.log(data))
+// emitter.emit('1231231', 42)
+//
 // setTimeout(() => {
-//     emitter.emit('test', 'lol')
-//     // unSub()
+//   emitter.emit('vladilen', 'After 2 seconds')
 // }, 2000)
+//
 // setTimeout(() => {
-//     emitter.emit('test', 'lol2')
+//   unsub()
+// }, 3000)
+//
+// setTimeout(() => {
+//   emitter.emit('vladilen', 'After 4 seconds')
 // }, 4000)

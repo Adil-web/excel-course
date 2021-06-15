@@ -10,19 +10,14 @@
   padding-bottom: 2px;
 
   .row {
-    position: relative;
     display: flex;
     flex-direction: row;
     min-height: 20px;
     height: $row-height;
-
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
   }
 
   .row-info {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,23 +38,17 @@
     justify-content: center;
     align-items: center;
     background: #f8f9fa;
-    min-width: 120px;
+    min-width: 40px;
     width: $cell-width;
     border: 1px solid $border-color;
     border-top: 0;
     border-left: 0;
     height: 100%;
-
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
   }
 
   .cell {
     min-width: 40px;
     padding: 5px;
-    min-width: 120px;
     width: $cell-width;
     height: 100%;
     border: 1px solid #e2e3e3;
@@ -77,36 +66,35 @@
     }
   }
 
-  .col-resize {
+  .col-resize, .row-resize {
     position: absolute;
-    top: 0;
+    bottom: 0;
     right: 0;
-    width: 4px;
-    height: 100%;
-    background-color: $primary-color;
+    background: $primary-color;
     opacity: 0;
     z-index: 1000;
 
-    &:hover{
-      opacity: 1 !important;
+    &:hover {
+      opacity: 1!important;
+    }
+  }
+
+  .col-resize {
+    top: 0;
+    width: 4px;
+
+    &:hover {
       cursor: col-resize;
     }
   }
-  
-  .row-resize {
-    position: absolute;
-    bottom: 0;
-    width: 40px;
-    height: 4px;
-    background-color: $primary-color;
-    opacity: 0;
-    z-index: 1000;
 
-    &:hover{
-      opacity: 1 !important;
+  .row-resize {
+    left: 0;
+    height: 4px;
+
+    &:hover {
       cursor: row-resize;
     }
   }
 
 }
-
